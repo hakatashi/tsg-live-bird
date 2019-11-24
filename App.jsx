@@ -62,6 +62,7 @@ module.exports = class App extends React.Component {
 				y: Math.random() * 150 + 25,
 			})),
 			isColiding: false,
+			score: 0,
 		};
 
 		this.interval = setInterval(() => {
@@ -103,8 +104,10 @@ module.exports = class App extends React.Component {
 			return;
 		}
 
-		this.setState(({x, y, vy, frame, gates}) => {
+		this.setState(({x, y, vy, frame, gates, score}) => {
 			const newY = Math.max(y + vy, 0);
+			const newX = x + 1.5;
+			let newScore = score;
 			let isGameOver = false;
 
 			if (newY > 250) {
@@ -114,6 +117,10 @@ module.exports = class App extends React.Component {
 			let isColiding = false;
 
 			for (const gate of gates) {
+				if (x <= gate.x && gate.x < newX) {
+					newScore++;
+				}
+
 				if (isColide(
 					{
 						x1: gate.x - x + 7,
@@ -154,12 +161,13 @@ module.exports = class App extends React.Component {
 			}
 
 			return {
-				x: x + 1.5,
+				x: newX,
 				y: Math.min(newY, 250),
-				vy: vy + 0.8,
+				vy: vy + 0.6,
 				frame: frame + 1,
 				isGameOver,
 				isColiding,
+				score: newScore,
 			};
 		});
 	};
@@ -225,6 +233,16 @@ module.exports = class App extends React.Component {
 					r="10"
 					fill={this.state.isColiding ? 'rgba(0, 0, 255, 0)' : 'rgba(255, 0, 0, 0)'}
 				/>
+				<text
+					x="50"
+					y="20"
+					fill="blue"
+					fontWeight="bold"
+					fontSize="10"
+					textAnchor="middle"
+				>
+					Score: {this.state.score}
+				</text>
 				{this.state.isGameOver && (
 					<text
 						x="50"
