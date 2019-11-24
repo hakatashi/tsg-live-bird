@@ -54,7 +54,7 @@ module.exports = class App extends React.Component {
 		}
 
 		this.setState({
-			vy: -10,
+			vy: -6,
 			frame: 0,
 		});
 	};
@@ -68,14 +68,14 @@ module.exports = class App extends React.Component {
 			const newY = Math.max(y + vy, 0);
 			let isGameOver = false;
 
-			if (newY > 200) {
+			if (newY > 250) {
 				isGameOver = true;
 			}
 
 			return {
 				x: x + 1.5,
-				y: Math.min(newY, 200),
-				vy: vy + 1,
+				y: Math.min(newY, 250),
+				vy: vy + 0.8,
 				frame: frame + 1,
 				isGameOver,
 			};
