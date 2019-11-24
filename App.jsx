@@ -59,7 +59,8 @@ module.exports = class App extends React.Component {
 			gates: range(20).map((i) => ({
 				index: i,
 				x: i * 150 + 200,
-				y: Math.random() * 100 + 50,
+				// y: Math.random() * 100 + 50,
+				y: 80,
 			})),
 			isColiding: false,
 		};
@@ -118,8 +119,8 @@ module.exports = class App extends React.Component {
 					{
 						x1: gate.x - x + 7,
 						x2: gate.x - x + 57,
-						y1: gate.y + 20,
-						y2: gate.y + 220,
+						y1: gate.y + 35,
+						y2: gate.y + 235,
 					},
 					{
 						x: 45,
@@ -135,8 +136,8 @@ module.exports = class App extends React.Component {
 					{
 						x1: gate.x - x + 7,
 						x2: gate.x - x + 57,
-						y1: gate.y - 220,
-						y2: gate.y - 20,
+						y1: gate.y - 235,
+						y2: gate.y - 35,
 					},
 					{
 						x: 45,
@@ -199,27 +200,27 @@ module.exports = class App extends React.Component {
 					<g key={gate.index}>
 						<image
 							x={gate.x - this.state.x}
-							y={gate.y + 20}
+							y={gate.y + 15}
 							height="200"
 							href="long-ojigineko.png"
 						/>
 						<image
 							x={gate.x - this.state.x}
-							y={-gate.y + 20}
+							y={-gate.y + 15}
 							height="200"
 							transform="scale(1, -1)"
 							href="long-ojigineko.png"
 						/>
 						<rect
 							x={gate.x - this.state.x + 7}
-							y={gate.y + 40}
+							y={gate.y + 35}
 							width="50"
 							height="200"
 							fill="rgba(255, 0, 0, 0.3)"
 						/>
 						<rect
 							x={gate.x - this.state.x + 7}
-							y={gate.y - 240}
+							y={gate.y - 235}
 							width="50"
 							height="200"
 							fill="rgba(255, 0, 0, 0.3)"
