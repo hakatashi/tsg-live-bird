@@ -12,6 +12,7 @@ module.exports = class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			x: 0,
 			y: 100,
 			vy: -10,
 			frame: 0,
@@ -57,7 +58,7 @@ module.exports = class App extends React.Component {
 			return;
 		}
 
-		this.setState(({y, vy, frame}) => {
+		this.setState(({x, y, vy, frame}) => {
 			const newY = Math.max(y + vy, 0);
 			let isGameOver = false;
 
@@ -66,6 +67,7 @@ module.exports = class App extends React.Component {
 			}
 
 			return {
+				x: x + 1,
 				y: Math.min(newY, 200),
 				vy: vy + 1.5,
 				frame: frame + 1,
@@ -109,6 +111,19 @@ module.exports = class App extends React.Component {
 						GAME OVER
 					</text>
 				)}
+				<image
+					x={100 - this.state.x}
+					y="50"
+					height="200"
+					href="long-ojigineko.png"
+				/>
+				<image
+					x={100 - this.state.x}
+					y="-50"
+					height="200"
+					transform="scale(1, -1)"
+					href="long-ojigineko.png"
+				/>
 			</svg>
 		);
 	}
