@@ -13,12 +13,28 @@ module.exports = class App extends React.Component {
 		super(props);
 		this.state = {
 			y: 100,
+			vy: -10,
 		};
+
+		this.interval = setInterval(() => {
+			this.handleTick();
+		}, 30);
 	}
 
 	handleRef = (node) => {
 		this.svg = node;
 	};
+
+	handleTick = () => {
+		this.setState(({y, vy}) => ({
+			y: y + vy,
+			vy: vy + 1,
+		}));
+	};
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
+	}
 
 	render() {
 		return (
@@ -30,7 +46,7 @@ module.exports = class App extends React.Component {
 				ref={this.handleRef}
 				onMouseDown={this.handleMouseDown}
 			>
-				<circle cx="50" cy="100" r="20"/>
+				<circle cx="50" cy={this.state.y} r="5"/>
 			</svg>
 		);
 	}
