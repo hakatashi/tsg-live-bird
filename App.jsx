@@ -58,7 +58,7 @@ module.exports = class App extends React.Component {
 			isGameOver: false,
 			gates: range(20).map((i) => ({
 				index: i,
-				x: i * 100,
+				x: i * 150 + 200,
 				y: Math.random() * 100 + 50,
 			})),
 			isColiding: false,
@@ -111,9 +111,8 @@ module.exports = class App extends React.Component {
 				isGameOver = true;
 			}
 
-			const isColiding = false;
+			let isColiding = false;
 
-			/*
 			for (const gate of gates) {
 				if (isColide(
 					{
@@ -123,13 +122,32 @@ module.exports = class App extends React.Component {
 						y2: gate.y + 220,
 					},
 					{
-						x: 30,
+						x: 45,
 						y,
-						r
+						r: 10,
 					},
-				))
+				)) {
+					isColiding = true;
+					break;
+				}
+
+				if (isColide(
+					{
+						x1: gate.x - x + 7,
+						x2: gate.x - x + 57,
+						y1: gate.y - 220,
+						y2: gate.y - 20,
+					},
+					{
+						x: 45,
+						y,
+						r: 10,
+					},
+				)) {
+					isColiding = true;
+					break;
+				}
 			}
-			*/
 
 			return {
 				x: x + 1.5,
@@ -165,12 +183,6 @@ module.exports = class App extends React.Component {
 					width="30"
 					height="30"
 					href={imageFile}
-				/>
-				<circle
-					cx="45"
-					cy={this.state.y}
-					r="10"
-					fill="rgba(255, 0, 0, 0.3)"
 				/>
 				{this.state.isGameOver && (
 					<text
@@ -214,6 +226,12 @@ module.exports = class App extends React.Component {
 						/>
 					</g>
 				))}
+				<circle
+					cx="45"
+					cy={this.state.y}
+					r="10"
+					fill={this.state.isColiding ? 'rgba(0, 0, 255, 0.3)' : 'rgba(255, 0, 0, 0.3)'}
+				/>
 			</svg>
 		);
 	}
