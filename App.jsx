@@ -124,7 +124,7 @@ module.exports = class App extends React.Component {
 					{
 						x: 45,
 						y,
-						r: 10,
+						r: 5,
 					},
 				)) {
 					isColiding = true;
@@ -141,7 +141,7 @@ module.exports = class App extends React.Component {
 					{
 						x: 45,
 						y,
-						r: 10,
+						r: 5,
 					},
 				)) {
 					isColiding = true;
