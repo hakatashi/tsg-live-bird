@@ -199,27 +199,27 @@ module.exports = class App extends React.Component {
 					<g key={gate.index}>
 						<image
 							x={gate.x - this.state.x}
-							y={gate.y}
+							y={gate.y + 20}
 							height="200"
 							href="long-ojigineko.png"
 						/>
 						<image
 							x={gate.x - this.state.x}
-							y={-gate.y}
+							y={-gate.y + 20}
 							height="200"
 							transform="scale(1, -1)"
 							href="long-ojigineko.png"
 						/>
 						<rect
 							x={gate.x - this.state.x + 7}
-							y={gate.y + 20}
+							y={gate.y + 40}
 							width="50"
 							height="200"
 							fill="rgba(255, 0, 0, 0.3)"
 						/>
 						<rect
 							x={gate.x - this.state.x + 7}
-							y={gate.y - 220}
+							y={gate.y - 240}
 							width="50"
 							height="200"
 							fill="rgba(255, 0, 0, 0.3)"
