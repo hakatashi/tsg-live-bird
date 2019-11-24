@@ -9,6 +9,44 @@ require('core-js/stage/3');
 require('core-js/stage/2');
 require('core-js/stage/1');
 
+const isColide = (rect, circle) => {
+	if (
+		rect.x1 <= circle.x &&
+		circle.x <= rect.x2 &&
+		rect.y1 - circle.r * 2 <= circle.y &&
+		circle.y <= rect.y2 + circle.r * 2
+	) {
+		return true;
+	}
+
+	if (
+		rect.y1 <= circle.y &&
+		circle.y <= rect.y2 &&
+		rect.x1 - circle.r * 2 <= circle.x &&
+		circle.x <= rect.x2 + circle.r * 2
+	) {
+		return true;
+	}
+
+	if ((rect.x1 - circle.x) ** 2 + (rect.y1 - circle.y) ** 2 <= (circle.r * 2) ** 2) {
+		return true;
+	}
+
+	if ((rect.x1 - circle.x) ** 2 + (rect.y2 - circle.y) ** 2 <= (circle.r * 2) ** 2) {
+		return true;
+	}
+
+	if ((rect.x2 - circle.x) ** 2 + (rect.y1 - circle.y) ** 2 <= (circle.r * 2) ** 2) {
+		return true;
+	}
+
+	if ((rect.x2 - circle.x) ** 2 + (rect.y2 - circle.y) ** 2 <= (circle.r * 2) ** 2) {
+		return true;
+	}
+
+	return false;
+};
+
 module.exports = class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,6 +61,7 @@ module.exports = class App extends React.Component {
 				x: i * 100,
 				y: Math.random() * 100 + 50,
 			})),
+			isColiding: false,
 		};
 
 		this.interval = setInterval(() => {
@@ -64,7 +103,7 @@ module.exports = class App extends React.Component {
 			return;
 		}
 
-		this.setState(({x, y, vy, frame}) => {
+		this.setState(({x, y, vy, frame, gates}) => {
 			const newY = Math.max(y + vy, 0);
 			let isGameOver = false;
 
@@ -72,12 +111,33 @@ module.exports = class App extends React.Component {
 				isGameOver = true;
 			}
 
+			const isColiding = false;
+
+			/*
+			for (const gate of gates) {
+				if (isColide(
+					{
+						x1: gate.x - x + 7,
+						x2: gate.x - x + 57,
+						y1: gate.y + 20,
+						y2: gate.y + 220,
+					},
+					{
+						x: 30,
+						y,
+						r
+					},
+				))
+			}
+			*/
+
 			return {
 				x: x + 1.5,
 				y: Math.min(newY, 250),
 				vy: vy + 0.8,
 				frame: frame + 1,
 				isGameOver,
+				isColiding,
 			};
 		});
 	};
@@ -106,6 +166,12 @@ module.exports = class App extends React.Component {
 					height="30"
 					href={imageFile}
 				/>
+				<circle
+					cx="45"
+					cy={this.state.y}
+					r="10"
+					fill="rgba(255, 0, 0, 0.3)"
+				/>
 				{this.state.isGameOver && (
 					<text
 						x="50"
@@ -131,6 +197,20 @@ module.exports = class App extends React.Component {
 							height="200"
 							transform="scale(1, -1)"
 							href="long-ojigineko.png"
+						/>
+						<rect
+							x={gate.x - this.state.x + 7}
+							y={gate.y + 20}
+							width="50"
+							height="200"
+							fill="rgba(255, 0, 0, 0.3)"
+						/>
+						<rect
+							x={gate.x - this.state.x + 7}
+							y={gate.y - 220}
+							width="50"
+							height="200"
+							fill="rgba(255, 0, 0, 0.3)"
 						/>
 					</g>
 				))}
