@@ -59,8 +59,7 @@ module.exports = class App extends React.Component {
 			gates: range(20).map((i) => ({
 				index: i,
 				x: i * 150 + 200,
-				// y: Math.random() * 100 + 50,
-				y: 80,
+				y: Math.random() * 150 + 25,
 			})),
 			isColiding: false,
 		};
@@ -125,7 +124,7 @@ module.exports = class App extends React.Component {
 					{
 						x: 45,
 						y,
-						r: 5,
+						r: 1,
 					},
 				)) {
 					isColiding = true;
@@ -142,7 +141,7 @@ module.exports = class App extends React.Component {
 					{
 						x: 45,
 						y,
-						r: 5,
+						r: 1,
 					},
 				)) {
 					isColiding = true;
