@@ -25,6 +25,14 @@ module.exports = class App extends React.Component {
 				this.handleJump();
 			}
 		});
+
+		window.addEventListener('click', (event) => {
+			this.handleJump();
+		});
+
+		window.addEventListener('touchstart', (event) => {
+			this.handleJump();
+		});
 	}
 
 	handleRef = (node) => {
@@ -39,7 +47,7 @@ module.exports = class App extends React.Component {
 
 	handleTick = () => {
 		this.setState(({y, vy}) => ({
-			y: y + vy,
+			y: Math.min(Math.max(y + vy, 0), 200),
 			vy: vy + 1.5,
 		}));
 	};
