@@ -1,4 +1,5 @@
 const React = require('react');
+const {range} = require('lodash');
 
 require('./index.pcss');
 
@@ -17,6 +18,11 @@ module.exports = class App extends React.Component {
 			vy: -10,
 			frame: 0,
 			isGameOver: false,
+			gates: range(20).map((i) => ({
+				index: i,
+				x: i * 100,
+				y: Math.random() * 100 + 50,
+			})),
 		};
 
 		this.interval = setInterval(() => {
@@ -67,9 +73,9 @@ module.exports = class App extends React.Component {
 			}
 
 			return {
-				x: x + 1,
+				x: x + 1.5,
 				y: Math.min(newY, 200),
-				vy: vy + 1.5,
+				vy: vy + 1,
 				frame: frame + 1,
 				isGameOver,
 			};
@@ -111,19 +117,23 @@ module.exports = class App extends React.Component {
 						GAME OVER
 					</text>
 				)}
-				<image
-					x={100 - this.state.x}
-					y="50"
-					height="200"
-					href="long-ojigineko.png"
-				/>
-				<image
-					x={100 - this.state.x}
-					y="-50"
-					height="200"
-					transform="scale(1, -1)"
-					href="long-ojigineko.png"
-				/>
+				{this.state.gates.map((gate) => (
+					<g key={gate.index}>
+						<image
+							x={gate.x - this.state.x}
+							y={gate.y}
+							height="200"
+							href="long-ojigineko.png"
+						/>
+						<image
+							x={gate.x - this.state.x}
+							y={-gate.y}
+							height="200"
+							transform="scale(1, -1)"
+							href="long-ojigineko.png"
+						/>
+					</g>
+				))}
 			</svg>
 		);
 	}
