@@ -150,6 +150,10 @@ module.exports = class App extends React.Component {
 				}
 			}
 
+			if (isColiding) {
+				isGameOver = true;
+			}
+
 			return {
 				x: x + 1.5,
 				y: Math.min(newY, 250),
@@ -185,17 +189,6 @@ module.exports = class App extends React.Component {
 					height="30"
 					href={imageFile}
 				/>
-				{this.state.isGameOver && (
-					<text
-						x="50"
-						y="100"
-						fill="red"
-						fontWeight="bold"
-						textAnchor="middle"
-					>
-						GAME OVER
-					</text>
-				)}
 				{this.state.gates.map((gate) => (
 					<g key={gate.index}>
 						<image
@@ -216,14 +209,14 @@ module.exports = class App extends React.Component {
 							y={gate.y + 35}
 							width="50"
 							height="200"
-							fill="rgba(255, 0, 0, 0.3)"
+							fill="rgba(255, 0, 0, 0)"
 						/>
 						<rect
 							x={gate.x - this.state.x + 7}
 							y={gate.y - 235}
 							width="50"
 							height="200"
-							fill="rgba(255, 0, 0, 0.3)"
+							fill="rgba(255, 0, 0, 0)"
 						/>
 					</g>
 				))}
@@ -231,8 +224,19 @@ module.exports = class App extends React.Component {
 					cx="45"
 					cy={this.state.y}
 					r="10"
-					fill={this.state.isColiding ? 'rgba(0, 0, 255, 0.3)' : 'rgba(255, 0, 0, 0.3)'}
+					fill={this.state.isColiding ? 'rgba(0, 0, 255, 0)' : 'rgba(255, 0, 0, 0)'}
 				/>
+				{this.state.isGameOver && (
+					<text
+						x="50"
+						y="100"
+						fill="red"
+						fontWeight="bold"
+						textAnchor="middle"
+					>
+						GAME OVER
+					</text>
+				)}
 			</svg>
 		);
 	}
