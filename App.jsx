@@ -56,7 +56,7 @@ module.exports = class App extends React.Component {
 			vy: -10,
 			frame: 0,
 			isGameOver: false,
-			gates: range(20).map((i) => ({
+			gates: range(2).map((i) => ({
 				index: i,
 				x: i * 150 + 200,
 				y: Math.random() * 150 + 25,
@@ -124,6 +124,15 @@ module.exports = class App extends React.Component {
 			for (const gate of gates) {
 				if (x <= gate.x && gate.x < newX) {
 					newScore++;
+				}
+
+				if (gate.x - x <= -100) {
+					this.state.gates.shift();
+					this.state.gates.push({
+						index: gate.index + 2,
+						x: gate.x + 2 * 150,
+						y: Math.random() * 150 + 25,
+					});
 				}
 
 				if (isColide(
