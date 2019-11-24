@@ -101,6 +101,11 @@ module.exports = class App extends React.Component {
 
 	handleTick = () => {
 		if (this.state.isGameOver) {
+			this.setState(({y, vy, frame}) => ({
+				y: Math.min(y + vy, 190),
+				vy: vy + 0.6,
+				frame: frame + 1,
+			}));
 			return;
 		}
 
@@ -163,7 +168,7 @@ module.exports = class App extends React.Component {
 			return {
 				x: newX,
 				y: Math.min(newY, 250),
-				vy: vy + 0.6,
+				vy: isGameOver ? 0 : vy + 0.6,
 				frame: frame + 1,
 				isGameOver,
 				isColiding,
