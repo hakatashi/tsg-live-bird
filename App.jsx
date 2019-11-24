@@ -12,6 +12,7 @@ module.exports = class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			y: 100,
 		};
 	}
 
@@ -28,7 +29,9 @@ module.exports = class App extends React.Component {
 				onMouseMove={this.handleMouseMove}
 				ref={this.handleRef}
 				onMouseDown={this.handleMouseDown}
-			/>
+			>
+				<circle cx="50" cy="100" r="20"/>
+			</svg>
 		);
 	}
 };
