@@ -15,6 +15,7 @@ module.exports = class App extends React.Component {
 			y: 100,
 			vy: -10,
 			frame: 0,
+			isGameOver: false,
 		};
 
 		this.interval = setInterval(() => {
@@ -41,6 +42,10 @@ module.exports = class App extends React.Component {
 	};
 
 	handleJump = () => {
+		if (this.state.isGameOver) {
+			return;
+		}
+
 		this.setState({
 			vy: -10,
 			frame: 0,
@@ -48,11 +53,25 @@ module.exports = class App extends React.Component {
 	};
 
 	handleTick = () => {
-		this.setState(({y, vy, frame}) => ({
-			y: Math.min(Math.max(y + vy, 0), 200),
-			vy: vy + 1.5,
-			frame: frame + 1,
-		}));
+		if (this.state.isGameOver) {
+			return;
+		}
+
+		this.setState(({y, vy, frame}) => {
+			const newY = Math.max(y + vy, 0);
+			let isGameOver = false;
+
+			if (newY > 200) {
+				isGameOver = true;
+			}
+
+			return {
+				y: Math.min(newY, 200),
+				vy: vy + 1.5,
+				frame: frame + 1,
+				isGameOver,
+			};
+		});
 	};
 
 	componentWillUnmount() {
@@ -79,6 +98,17 @@ module.exports = class App extends React.Component {
 					height="30"
 					href={imageFile}
 				/>
+				{this.state.isGameOver && (
+					<text
+						x="50"
+						y="100"
+						fill="red"
+						fontWeight="bold"
+						textAnchor="middle"
+					>
+						GAME OVER
+					</text>
+				)}
 			</svg>
 		);
 	}
