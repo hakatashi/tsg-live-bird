@@ -14,6 +14,7 @@ module.exports = class App extends React.Component {
 		this.state = {
 			y: 100,
 			vy: -10,
+			frame: 0,
 		};
 
 		this.interval = setInterval(() => {
@@ -42,13 +43,15 @@ module.exports = class App extends React.Component {
 	handleJump = () => {
 		this.setState({
 			vy: -10,
+			frame: 0,
 		});
 	};
 
 	handleTick = () => {
-		this.setState(({y, vy}) => ({
+		this.setState(({y, vy, frame}) => ({
 			y: Math.min(Math.max(y + vy, 0), 200),
 			vy: vy + 1.5,
+			frame: frame + 1,
 		}));
 	};
 
@@ -57,6 +60,9 @@ module.exports = class App extends React.Component {
 	}
 
 	render() {
+		const frame = Math.floor(this.state.frame / 2.5);
+		const imageFile = `ojigineko${Math.min(frame + 1, 8).toString().padStart(2, '0')}.png`;
+
 		return (
 			<svg
 				width="100%"
@@ -66,7 +72,13 @@ module.exports = class App extends React.Component {
 				ref={this.handleRef}
 				onMouseDown={this.handleMouseDown}
 			>
-				<circle cx="50" cy={this.state.y} r="5"/>
+				<image
+					x="30"
+					y={this.state.y - 15}
+					width="30"
+					height="30"
+					href={imageFile}
+				/>
 			</svg>
 		);
 	}
