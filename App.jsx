@@ -19,16 +19,28 @@ module.exports = class App extends React.Component {
 		this.interval = setInterval(() => {
 			this.handleTick();
 		}, 30);
+
+		window.addEventListener('keydown', (event) => {
+			if (event.code === 'Space') {
+				this.handleJump();
+			}
+		});
 	}
 
 	handleRef = (node) => {
 		this.svg = node;
 	};
 
+	handleJump = () => {
+		this.setState({
+			vy: -10,
+		});
+	};
+
 	handleTick = () => {
 		this.setState(({y, vy}) => ({
 			y: y + vy,
-			vy: vy + 1,
+			vy: vy + 1.5,
 		}));
 	};
 
